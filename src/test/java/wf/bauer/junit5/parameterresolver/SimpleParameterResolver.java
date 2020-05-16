@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.TestTemplateInvocationContext;
+import org.junit.jupiter.engine.descriptor.ClassTestDescriptor;
 import org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor;
 import org.junit.platform.commons.util.ReflectionUtils;
 
@@ -30,7 +31,7 @@ public class SimpleParameterResolver implements ParameterResolver {
     return resolveArguments(extensionContext)[annotation.get().value()];
   }
 
-  private Object[] resolveArguments(final ExtensionContext context) {
+  protected Object[] resolveArguments(final ExtensionContext context) {
     try {
       Method method = ReflectionUtils.findMethod(context.getClass(),"getTestDescriptor")
           .orElseThrow(() -> new ParameterResolutionException("Cannot resolve parameter, internal getTestDescriptor not available"));
